@@ -1,6 +1,7 @@
-import os
-import yaml
+from pathlib import Path
 from typing import Optional
+
+import yaml
 
 from aiogram_i18n.cores.base import BaseCore
 
@@ -10,16 +11,16 @@ class I18nYamlCore(BaseCore):
         """
         :param path: directory with YAML files with translations
         """
+        self.path = Path(path)
         super().__init__(path=path, default_locale=default_locale)
-        self._cache = {} 
+        self._cache = {}
         self._load_locales()
 
     def _load_locales(self):
-        for filename in os.listdir(self.path):
-            if filename.endswith('.yaml') or filename.endswith('.yml'):
-                locale = os.path.splitext(filename)[0]
-                file_path = os.path.join(self.path, filename)
-                with open(file_path, encoding='utf-8') as f:
+        for pattern in ("*.yaml", "*.yml"):
+            for file in self.path.glob(pattern):
+                locale = file.stem
+                with file.open(encoding='utf-8') as f:
                     self._cache[locale] = yaml.safe_load(f)
 
     def find_locales(self):

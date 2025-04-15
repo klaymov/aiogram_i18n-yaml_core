@@ -1,0 +1,2 @@
+hello: "Hello, {user}!"
+start_info: "Welcome to our bot!"

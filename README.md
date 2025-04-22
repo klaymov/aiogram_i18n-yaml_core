@@ -23,7 +23,7 @@ from aiogram_i18n.types import (
     ReplyKeyboardMarkup, KeyboardButton
 )
 
-from i18n_yaml_core import I18nYamlCore
+from i18n_yaml_core import YamlCore
 
 
 router = Router(name=__name__)
@@ -52,7 +52,7 @@ async def main() -> None:
     bot = Bot("42:ABC", default=DefaultBotProperties(parse_mode=ParseMode.HTML))
 
     i18n_middleware = I18nMiddleware(
-        core=I18nYamlCore(
+        core=YamlCore(
             path="locales",
             default_locale="en"
         )
